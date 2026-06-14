@@ -6,13 +6,13 @@
 
 # based on https://ladis.cloud/blog/posts/firmware-update-8bitdo.html
 
-from urllib import request
-from dataclasses import dataclass
-from pathlib import Path
-from typing import List
 import argparse
 import json
 import shutil
+from dataclasses import dataclass
+from pathlib import Path
+from typing import List
+from urllib import request
 
 SCRIPT_VERSION = "0.0.2"
 
