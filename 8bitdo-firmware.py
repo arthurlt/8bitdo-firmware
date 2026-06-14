@@ -17,7 +17,6 @@
 import requests
 import sys
 import os
-import urllib.request
 
 baseurl = "http://dl.8bitdo.com:8080"
 
@@ -42,26 +41,23 @@ result = response.json()
 
 for item in result["list"]:
     num = item["type"]
-    if not num in products:
+    if num not in products:
         products[num] = []
     products[num].append(item)
 
 if sys.argv[1] == "-l":
-
     if len(sys.argv) == 2:
-
         for num, item in products.items():
-            print(f"{num}:\t{item[0]["fileName"]}")
+            print(f"{num}:\t{item[0]['fileName']}")
 
     else:
-
         num = int(sys.argv[2])
         if num not in products:
             print("... device number not found.\n")
             exit(1)
         fws = products[num]
 
-        print(f"Firmware versions for {fws[0]["fileName"]} (#{num}):\n")
+        print(f"Firmware versions for {fws[0]['fileName']} (#{num}):\n")
 
         for fw in fws:
             ver = str(fw["version"])
@@ -72,7 +68,6 @@ if sys.argv[1] == "-l":
     exit(0)
 
 if sys.argv[1] == "-f":
-
     if len(sys.argv) != 4:
         help()
 
@@ -81,13 +76,18 @@ if sys.argv[1] == "-f":
 
     fws = products[num]
 
-    print(f"Fetching firmware {ver} for {fws[0]["fileName"]} (#{num}):\n")
+    print(f"Fetching firmware {ver} for {fws[0]['fileName']} (#{num}):\n")
     for fw in fws:
         if str(fw["version"]).startswith(ver):
             url = baseurl + fw["filePathName"]
             file = os.path.basename(url)
             print("Downloading: " + url)
-            urllib.request.urlretrieve(url, file)
+            # urllib.request.urlretrieve(url, file)
+            response = requests.get(url, stream=True)
+            with open(file, "wb") as f:
+                for chunk in response.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
             print("Saved firmware to " + file + ".\n")
             exit(0)
 
