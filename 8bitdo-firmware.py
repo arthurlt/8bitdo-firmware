@@ -1,11 +1,22 @@
-#!/usr/bin/python3
+#!/usr/bin/env -S uv run --script
+#
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "requests>=2.34.2",
+# ]
+# ///
+
 
 # (c) 2025 Florian 'floe' Echtler <floe@butterbrot.org>
+# (c) 2026 Arthur 'arthurlt' Tucker <arthur@tuckerfami.ly>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 # based on https://ladis.cloud/blog/posts/firmware-update-8bitdo.html
 
-import requests, json, sys, os
+import requests
+import sys
+import os
 import urllib.request
 
 baseurl = "http://dl.8bitdo.com:8080"
