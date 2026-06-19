@@ -1,5 +1,16 @@
-# ignore .dat files in the repository root
-/*.dat
+# OS files
+.DS_Store
+Thumbs.db
 
-# ignore .DS_Store files everywhere
-*.DS_Store
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# python files
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
